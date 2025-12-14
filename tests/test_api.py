@@ -5,6 +5,7 @@ from sanhe_atlassian_sdk import api
 
 def test():
     _ = api
+    _ = api.Atlassian
 
 
 if __name__ == "__main__":
