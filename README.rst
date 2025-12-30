@@ -50,7 +50,62 @@ Welcome to ``sanhe_atlassian_sdk`` Documentation
 .. image:: https://sanhe-atlassian-sdk.readthedocs.io/en/latest/_static/sanhe_atlassian_sdk-logo.png
     :target: https://sanhe-atlassian-sdk.readthedocs.io/en/latest/
 
-Documentation for ``sanhe_atlassian_sdk``.
+``sanhe_atlassian_sdk`` is a lightweight foundational library for interacting with
+`Atlassian REST APIs <https://developer.atlassian.com/cloud/>`_.
+It provides a unified HTTP client with both synchronous and asynchronous support,
+serving as the base layer for product-specific SDKs.
+
+
+About
+------------------------------------------------------------------------------
+
+This library is designed as a **low-level foundation** that handles common concerns
+for Atlassian API interactions:
+
+- **Unified HTTP Client**: Built on `httpx <https://www.python-httpx.org/>`_ for modern,
+  high-performance HTTP operations
+- **Sync and Async Support**: Seamlessly switch between synchronous and asynchronous
+  request patterns based on your application needs
+- **Authentication**: Built-in HTTP Basic Authentication for Atlassian Cloud APIs
+- **Pydantic Integration**: Uses `Pydantic <https://docs.pydantic.dev/>`_ for robust
+  configuration validation
+
+**Product-Specific SDKs**: This library serves as the foundation for higher-level SDKs
+that provide product-specific functionality:
+
+- ``sanhe_confluence_sdk`` - Confluence Cloud API operations (coming soon)
+- ``sanhe_jira_sdk`` - Jira Cloud API operations (coming soon)
+
+
+Usage
+------------------------------------------------------------------------------
+
+.. code-block:: python
+
+    from sanhe_atlassian_sdk import Atlassian
+
+    # Initialize the client
+    client = Atlassian(
+        url="https://your-domain.atlassian.net",
+        username="your-email@example.com",
+        password="your-api-token",  # Use API token, not your account password
+    )
+
+    # Use the synchronous client
+    response = client.sync_client.get(
+        f"{client.url}/wiki/api/v2/spaces",
+    )
+
+    # Or use the asynchronous client
+    async def fetch_spaces():
+        response = await client.async_client.get(
+            f"{client.url}/wiki/api/v2/spaces",
+        )
+        return response.json()
+
+**Note**: For Atlassian Cloud, you should use an
+`API token <https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/>`_
+as the password, not your account password.
 
 
 .. _install:
